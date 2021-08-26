@@ -1,0 +1,18 @@
+python build-citation-network.py journalfolderpath
+python find-scc.py journalfolderpath
+Sort the SCC lengths to determine the size of largest SCC.(optional step)
+	sort -g journalfolderpath SCCs_lengths.txt
+Build the largest scc file by writing the largest SCC to a new file namely "largest_scc_unmodified.txt". The largest scc can be obtained from the file "SCCs.txt"
+
+The file "largest_scc.txt" has to be modified for easy further processing. We remove the ' symbol from the file.
+	sed "s/'//g" /journalfolderpath/largest_scc_unmodified.txt >/journalfolderpath/largest_scc.txt
+	
+python find-all-directed-cliques.py journalfolderpath
+
+The file "directed_cliques.txt" has to be preprocessed and empty lines, commas, open and closed braces has to be removed from it.
+	remove empty lines from directed_cliques_in_largest_scc.txt using sed -r '/^\s*$/d'
+	remove { from directed_cliques.txt using sed "s/{//g"
+	remove } from directed_cliques.txt using sed "s/}//g"
+	remove , from directed_cliques.txt using sed "s/,//g"
+python remove-redundant-cliques.py journalfolderpath directed_cliques.txt
+python finding-pccs.py journalfolderpath threshold

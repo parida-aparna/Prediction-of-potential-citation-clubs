@@ -1,0 +1,6 @@
+python read-papers-binary-search.py journalfolderpath
+Go to the journal folder:
+	sort /journalfolderpath/labelled_cit_network.txt >/journalfolderpath/sorted_network.txt
+	uniq -c /journalfolderpath/sorted_network.txt >/journalfolderpath/sorted_weighted_network.txt
+python find-inside-outside-cites-number.py journalfolderpath
+python generate-final-author-cit-network.py journalfolderpath sorted_weighted_network auth_auth_citation
